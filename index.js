@@ -1,21 +1,22 @@
 'use strict';
+const express  = require('express');
+const path     = require('path');
+const http     = require('http');
+const socketio = require('socket.io');
 
-var request = new XMLHttpRequest();
-var url = 'tell_your_world.mp3' 
-request.open('GET', url, true);
-request.responseType = 'arraybuffer';
-request.send();
+const app = express();
+const server = http.Server(app);
+const io = socketio(server);
 
-var context = new AudioContext();
-var source = context.createBufferSource();
-var buffer = null;
-request.onload = function () {
-  var res = request.response;
-  context.decodeAudioData(res, function (buf) {
-    source.buffer = buf;
-  });
-};
+app.set('view engine', 'ejs');
+// app.use(express.static(path.resolve(__dirname, 'public')))
+app.use(express.static('public'))
 
-source.connect(context.destination);
-// 再生
-source.start(0);
+app.get('/', (req, res) => {
+  res.render('index')
+});
+
+const port = process.env.PORT || 8080
+server.listen(port, () => {
+  console.log('listening on :', port)
+});
