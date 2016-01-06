@@ -1,21 +1,19 @@
-'use strict';
+import Howler from 'howler';
 
-let request = new XMLHttpRequest();
-let url = 'tell_your_world.mp3' 
-request.open('GET', url, true);
-request.responseType = 'arraybuffer';
-request.send();
+export default class Audio {
+  constructor() {
+    this.sound = new Howler.Howl({
+      urls: ['tell_your_world.mp3']
+    });
+    this.id = null;
+  }
 
-let context = new AudioContext();
-let source = context.createBufferSource();
-let buffer = null;
-request.onload = function () {
-  let res = request.response;
-  context.decodeAudioData(res, function (buf) {
-    source.buffer = buf;
-  });
-};
+  play() {
+    this.id = this.sound.play();
+  }
 
-source.connect(context.destination);
+  pause() {
+    this.sound.pause(this.id);
+  }
+}
 
-export default source;

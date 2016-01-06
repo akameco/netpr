@@ -23,6 +23,7 @@
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express-useragent": "^0.2.4",
+    "howler": "github:goldfire/howler.js",
     "jquery": "^2.1.4",
     "socket.io": "^1.4.0"
   }

@@ -1,12 +1,23 @@
 'use strict';
 import $ from "jquery";
-import source from './music';
+import Audio from './music';
 
-let socket = io();
+const audio = new Audio();
 
+const socket = io();
 socket.on('data', v => {
   $('h1').text(v);
 });
 
-source.start(0);
+const $soundBtn = $('#soundBtn');
+
+$soundBtn.on('click', (e) => {
+  if($soundBtn.text() == '再生') {
+    $soundBtn.text('停止');
+    audio.play();
+  } else {
+    $soundBtn.text('再生');
+    audio.pause();
+  }
+});
 
