@@ -4,9 +4,9 @@ const path     = require('path');
 const http     = require('http');
 const socketio = require('socket.io');
 
-const app = express();
+const app    = express();
 const server = http.Server(app);
-const io = socketio(server);
+const io     = socketio(server);
 
 app.set('view engine', 'ejs');
 // app.use(express.static(path.resolve(__dirname, 'public')))
@@ -14,6 +14,19 @@ app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   res.render('index')
+});
+
+io.on('connection', socket => {
+  console.log('a user connected');
+
+  socket.on('msg', msg => {
+    io.emit('data', 'hello emit world');
+    console.log(msg);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
 const port = process.env.PORT || 8080

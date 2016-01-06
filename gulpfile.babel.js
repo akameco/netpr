@@ -8,7 +8,7 @@ const nodemon    = require('gulp-nodemon');
 
 gulp.task('browserify', () => {
   browserify('./client/index.js', { degug: true })
-    .transform(babelify)
+    .transform(babelify, {presets: ['es2015']})
     .bundle()
     .on("error", err => { console.log("Error : " + err.message); })
     .pipe(source('bundle.js'))
@@ -24,7 +24,7 @@ gulp.task('nodemon', () => {
 });
 
 gulp.task('watch', () => {
-  gulp.watch(['./client/js/**/*'], ['browserify'])
+  gulp.watch(['./client/**/*'], ['browserify'])
 });
 
 gulp.task('default', ['browserify', 'watch', 'nodemon']);

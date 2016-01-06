@@ -1,22 +1,32 @@
 'use strict';
+import userAgent from 'ua';
 
-var request = new XMLHttpRequest();
-var url = 'tell_your_world.mp3' 
+let request = new XMLHttpRequest();
+let url = 'tell_your_world.mp3' 
 request.open('GET', url, true);
 request.responseType = 'arraybuffer';
 request.send();
 
-var context = new AudioContext();
-var source = context.createBufferSource();
-var buffer = null;
+let context = new AudioContext();
+let source = context.createBufferSource();
+let buffer = null;
 request.onload = function () {
-  var res = request.response;
+  let res = request.response;
   context.decodeAudioData(res, function (buf) {
     source.buffer = buf;
   });
 };
 
 source.connect(context.destination);
-// 再生
-source.start(0);
 
+// 再生
+if(userAgent.Mobile || userAgent.Tablet) {
+} else {
+  source.start(0);
+}
+
+let socket = io();
+socket.emit('msg', 'hello world');
+socket.on('data', v => {
+  console.log(v);
+});
