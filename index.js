@@ -10,7 +10,6 @@ const io     = socketio(server);
 
 app.set('view engine', 'ejs');
 app.use(useragent.express());
-// app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
@@ -25,7 +24,7 @@ io.on('connection', socket => {
   console.log('a user connected');
 
   socket.on('msg', msg => {
-    io.emit('data', 'hello emit world');
+    io.emit('data', msg);
     console.log(msg);
   });
 
@@ -38,3 +37,4 @@ const port = process.env.PORT || 8080
 server.listen(port, () => {
   console.log('listening on :', port)
 });
+
