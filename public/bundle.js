@@ -5,32 +5,14 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _music = require('./music');
-
-var _music2 = _interopRequireDefault(_music);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var audio = new _music2.default();
 
 var socket = io();
 socket.on('data', function (v) {
   (0, _jquery2.default)('h1').text(v);
 });
 
-var $soundBtn = (0, _jquery2.default)('#soundBtn');
-
-$soundBtn.on('click', function (e) {
-  if ($soundBtn.text() == '再生') {
-    $soundBtn.text('停止');
-    audio.play();
-  } else {
-    $soundBtn.text('再生');
-    audio.pause();
-  }
-});
-
-},{"./music":4,"jquery":7}],2:[function(require,module,exports){
+},{"jquery":7}],2:[function(require,module,exports){
 'use strict';
 
 var _ua = require('./ua');
